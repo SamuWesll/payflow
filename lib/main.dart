@@ -1,24 +1,44 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:payflow/moduiles/login/login_page.dart';
-import 'package:payflow/moduiles/splash/splash_page.dart';
-import 'package:payflow/shared/themes/app_colors.dart';
+import 'package:payflow/app_widget.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(AppFirebase());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class AppFirebase extends StatefulWidget {
+  AppFirebase({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  _AppFirebaseState createState() => _AppFirebaseState();
+}
+
+class _AppFirebaseState extends State<AppFirebase> {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: AppColors.primary,
-      ),
-      home: LoginPage(),
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Material(
+            child: Center(
+              child: Text(
+                'Não foi possivel inicializar o Firebase',
+                textDirection: TextDirection.ltr,
+              ),
+            ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          return const AppWidget();
+        } else {
+          return const Material(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 }
