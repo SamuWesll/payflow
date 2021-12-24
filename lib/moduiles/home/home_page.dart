@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(152),
+        preferredSize: const Size.fromHeight(152),
         child: Container(
           height: 152,
           color: AppColors.primary,
@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: pages[controller.currentPage],
+      // ignore: sized_box_for_whitespace
       bottomNavigationBar: Container(
         height: 90,
         child: Row(
@@ -64,20 +65,22 @@ class _HomePageState extends State<HomePage> {
                   controller.setPage(0);
                 });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.home,
                 color: AppColors.primary,
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, "/barcode_scanner");
+              },
               child: Container(
                 height: 56,
                 width: 56,
                 decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(5)),
-                child: Icon(
+                child: const Icon(
                   Icons.add_box_outlined,
                   color: AppColors.background,
                 ),
@@ -89,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                   controller.setPage(1);
                 });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.description_outlined,
                 color: AppColors.body,
               ),

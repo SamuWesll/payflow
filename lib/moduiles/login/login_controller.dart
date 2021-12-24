@@ -14,9 +14,11 @@ class LoginController {
       final user =
           UserModel(name: response!.displayName!, photoURL: response.photoUrl);
       authController.setUser(context, user);
+      // ignore: avoid_print
       print(response);
     } catch (error) {
       authController.setUser(context, null);
+      // ignore: avoid_print
       print(error);
     }
   }

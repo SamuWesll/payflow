@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:payflow/app_widget.dart';
 
 void main() {
-  runApp(AppFirebase());
+  runApp(const AppFirebase());
 }
 
 class AppFirebase extends StatefulWidget {
-  AppFirebase({Key? key}) : super(key: key);
+  const AppFirebase({Key? key}) : super(key: key);
 
   @override
   _AppFirebaseState createState() => _AppFirebaseState();
@@ -30,7 +30,7 @@ class _AppFirebaseState extends State<AppFirebase> {
             ),
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
-          return const AppWidget();
+          return AppWidget();
         } else {
           return const Material(
             child: Center(
