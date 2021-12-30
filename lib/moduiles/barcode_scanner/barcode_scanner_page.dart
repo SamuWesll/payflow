@@ -47,7 +47,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
               builder: (_, status, __) {
                 if (status.showCamera) {
                   return Container(
-                    child: status.cameraController!.buildPreview(),
+                    child: controller.cameraController!.buildPreview(),
                   );
                 } else {
                   return Container();
@@ -94,7 +94,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                         "Tente scanear novamente ou digite o código do seu boleto.",
                     primaryLabel: "Scanear novamente",
                     primaryOnPressed: () {
-                      controller.getAvailableCameras();
+                      controller.scanWithCamera();
                     },
                     secundaryLabel: "Digitar código",
                     secundaryOnPress: () {},
