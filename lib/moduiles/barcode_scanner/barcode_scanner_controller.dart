@@ -67,7 +67,8 @@ class BarcodeScannerController {
 
   void scanWithImagePicker() async {
     await cameraController!.stopImageStream();
-    final response = await ImagePicker().getImage(source: ImageSource.gallery);
+    final response = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 1);
     // final response = await ImagePicker().pickImage(source: ImageSource.gallery);
     final inputImage = InputImage.fromFilePath(response!.path);
     scannerBarCode(inputImage);

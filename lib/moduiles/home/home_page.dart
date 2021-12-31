@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:payflow/moduiles/extract/extract_page.dart';
 import 'package:payflow/moduiles/home/home_controller.dart';
 import 'package:payflow/moduiles/meus_boletos/meus_boletos_page.dart';
+import 'package:payflow/shared/models/user_model.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final UserModel user;
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,10 +16,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
-  final pages = [
-    const MeusBoletosPage(),
-    const ExtractPage(),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyles.titleRegular,
                 children: [
                   TextSpan(
-                    text: "Samu!",
+                    text: widget.user.name,
                     style: TextStyles.titleBoldBackground,
                   ),
                 ],
@@ -46,15 +44,19 @@ class _HomePageState extends State<HomePage> {
                 height: 48,
                 width: 48,
                 decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                        image: NetworkImage(widget.user.photoURL!))),
               ),
             ),
           ),
         ),
       ),
-      body: pages[controller.currentPage],
+      body: [
+        MeusBoletosPage(key: UniqueKey()),
+        ExtractPage(key: UniqueKey()),
+      ][controller.currentPage],
       // ignore: sized_box_for_whitespace
       bottomNavigationBar: Container(
         height: 90,
@@ -75,9 +77,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                // Navigator.pushNamed(context, "/barcode_scanner");
-                Navigator.pushNamed(context, "/insert_boleto");
+              onTap: () async {
+                await Navigator.pushNamed(context, "/barcode_scanner");
+                setState(() {});
               },
               child: Container(
                 height: 56,

@@ -21,7 +21,11 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     controller.getAvailableCameras();
     controller.statusNotifier.addListener(() {
       if (controller.status.hasBarcode) {
-        Navigator.pushReplacementNamed(context, "/insert_boleto");
+        Navigator.pushReplacementNamed(
+          context,
+          "/insert_boleto",
+          arguments: controller.status.barcode,
+        );
       }
     });
     super.initState();
@@ -64,16 +68,26 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                     style: TextStyles.buttonBackground,
                   ),
                   centerTitle: true,
-                  leading: const BackButton(color: AppColors.background),
+                  leading: const BackButton(
+                    color: AppColors.background,
+                  ),
                 ),
                 body: Column(
                   children: [
                     Expanded(
-                        child: Container(color: Colors.black.withOpacity(0.6))),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.6),
+                      ),
+                    ),
                     Expanded(
-                        flex: 2, child: Container(color: Colors.transparent)),
+                      flex: 2,
+                      child: Container(color: Colors.transparent),
+                    ),
                     Expanded(
-                        child: Container(color: Colors.black.withOpacity(0.6))),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.6),
+                      ),
+                    ),
                   ],
                 ),
                 // ignore: sized_box_for_whitespace
@@ -97,7 +111,13 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                       controller.scanWithCamera();
                     },
                     secundaryLabel: "Digitar código",
-                    secundaryOnPress: () {},
+                    secundaryOnPress: () {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        "/insert_boleto",
+                        arguments: "",
+                      );
+                    },
                   );
                 } else {
                   return Container();
